@@ -7,6 +7,7 @@
       :currentQuestion="questions[index]"
       :next="next"
       :increment="increment"
+      :numTotal="numTotal"
     />
   </div>
 </template>
@@ -40,7 +41,7 @@ export default {
       this.numTotal++;
     },
   },
-  mounted: function() {
+  mounted: function () {
     fetch(
       "https://opentdb.com/api.php?amount=10&category=18&difficulty=easy&type=multiple",
       {

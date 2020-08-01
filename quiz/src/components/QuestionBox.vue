@@ -5,21 +5,15 @@
         <div class="p-12 md:w-full flex flex-col items-start">
           <h2
             class="sm:text-3xl text-2xl title-font font-medium text-gray-900 mt-4 mb-4"
-          >
-            {{ currentQuestion.question }}
-          </h2>
-          <ul
-            class="flex flex-col w-full justify-center items-center flex-wrap"
-          >
+          >{{ currentQuestion.question }}</h2>
+          <ul class="flex flex-col w-full justify-center items-center flex-wrap">
             <li
-              v-for="(answer, index) in answers"
+              v-for="(answer, index) in shuffeledAnswers"
               :key="index"
               @click="selectedAnswer(index)"
               class="px-4 py-2 border-2 rounded-md hover:bg-blue-200 cursor-pointer my-2 border-blue-200 w-4/12 text-left"
               :class="answerClass(index)"
-            >
-              {{ answer }}
-            </li>
+            >{{ answer }}</li>
           </ul>
           <div
             class="flex items-center flex-wrap pb-4 mb-4 border-b-2 border-gray-200 mt-auto w-full"
@@ -28,17 +22,21 @@
             <button
               class="flex justify-center items-center text-white w-32 bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded"
               @click="submitAnswer()"
+              :disabled="selectedIndex === null || answered"
               :class="
                 selectedIndex === null || answered
                   ? 'opacity-50 cursor-not-allowed'
                   : ''
               "
-            >
-              Submit
-            </button>
+            >Submit</button>
             <button
               @click="next"
               class="flex justify-center items-center text-white w-32 bg-teal-500 border-0 py-2 px-6 focus:outline-none hover:bg-teal-600 rounded"
+              :class="
+                (index >= 10)
+                  ? 'opacity-50 cursor-not-allowed'
+                  : ''
+              "
             >
               Next
               <svg
@@ -67,6 +65,7 @@ export default {
     currentQuestion: Object,
     next: Function,
     increment: Function,
+    numTotal: Number,
   },
   data() {
     return {
